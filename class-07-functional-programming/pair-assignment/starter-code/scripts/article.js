@@ -30,8 +30,6 @@
 
     // DONE: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
     // is the transformation of one colleciton into another.
-    // rawData.forEach(function(ele) {
-    //   Article.all.push(new Article(ele));
     // })
     Article.all = rawData.map(function(ele) {
       return new Article(ele);
@@ -49,14 +47,12 @@
   Article.fetchAll = function(callback) {
     if (localStorage.rawData) {
       Article.loadAll(JSON.parse(localStorage.rawData));
-      // articleView.initIndexPage();
       callback();
 
     } else {
       $.getJSON('/data/hackerIpsum.json', function(rawData) {
         Article.loadAll(rawData);
         localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-        // articleView.initIndexPage();
         callback();
       });
     }
@@ -65,7 +61,6 @@
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = function() {
     return Article.all.map(function(article) {
-      console.log(article);
       return article.body.split(' ').length;
 
        // Get the total number of words in this article
@@ -75,20 +70,15 @@
     })
   };
 
-// TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+  // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
   Article.allAuthors = function() {
     return Article.all.map(function(article) {
       return article.author
-      // var authorName = [];
-      // authorName.push(article.author);
-      console.log(article);
-
     })
     .reduce(function(a, b) {
       if (a.indexOf(b) < 0) {
         a.push(b)
       }
-      console.log(a);
       return a;
     },[]);
      // Don't forget to read the docs on map and reduce!
@@ -99,9 +89,21 @@
     // the author's name, and one for the total number of words across all articles written by the specified author.
     return Article.allAuthors().map(function(author) {
       return {
-        // someKey: someValOrFunctionCall().map(...).reduce(...), ...
+        name: author,
+        numWords: Article.all.map(function(article){
+          if(author===article.author){
+            return article.body.split(' ').length
+          } else {
+            return 0;
+          }
+        })
+        .reduce(function (a,b) {
+          return a + b
+        })
       }
-    })
-  }
+        // someKey: someValOrFunctionCall().map(...).reduce(...), ...
+      })
+    }
+
   module.Article = Article;
 })(window);
