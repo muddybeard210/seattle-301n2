@@ -34,7 +34,7 @@
   // TODO: Correct the SQL to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
-      'DELETE * FROM articles',
+      'DELETE FROM articles',
       callback
     );
   };
@@ -93,7 +93,7 @@
     webDB.execute('SELECT * FROM articles', function(rows) {
       if (rows.length) {
         Article.loadAll(rows);
-        articleView.initIndexPage();
+        next();
         // Now instanitate those rows with the .loadAll function, and pass control to the view.
 
       } else {
@@ -107,7 +107,7 @@
           // Now get ALL the records out the DB, with their database IDs:
           webDB.execute('SELECT * FROM articles', function(rows) {
             Article.loadAll(rows);
-            articleView.initIndexPage();
+            next();
             // Now instanitate those rows with the .loadAll function, and pass control to the view.
 
           });
