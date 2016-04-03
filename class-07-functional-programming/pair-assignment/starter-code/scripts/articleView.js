@@ -115,20 +115,33 @@
 
   articleView.initAdminPage = function() {
     // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
+<<<<<<< HEAD
     var template = Handlebars.compile($('#author-template').text());
     console.log(this);
+=======
+    var template; // = ...?
+>>>>>>> 1cec224213e8c074919ecc175f01cf064e85a346
 
     // DONE: We use `forEach` here because we are relying on the side-effects of the callback function:
     // appending to the DOM.
     // The callback is not required to return anything.
+<<<<<<< HEAD
      Article.numWordsByAuthor().forEach(function(stat) {
        $('.author-stats').append(template(stat));
      })
+=======
+    Article.numWordsByAuthor().forEach(function(stat) {
+      $('.author-stats').append(template(stat));
+    })
+>>>>>>> 1cec224213e8c074919ecc175f01cf064e85a346
 
     // DONE: Simply write the correct values to the page:
     $('#blog-stats .articles').text(Article.all.length);
     $('#blog-stats .words').text(Article.numWordsAll());
+<<<<<<< HEAD
     return template(this);
+=======
+>>>>>>> 1cec224213e8c074919ecc175f01cf064e85a346
   };
 
   module.articleView = articleView;
